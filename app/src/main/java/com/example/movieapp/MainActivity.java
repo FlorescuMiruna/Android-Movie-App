@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> moviesList;
 
-    HomeFragment homeFragment = new HomeFragment();
-    SettingsFragment settingsFragment = new SettingsFragment();
-    NotificationFragment notificationFragment = new NotificationFragment();
+//    HomeFragment homeFragment = new HomeFragment();
+//    SettingsFragment settingsFragment = new SettingsFragment();
+//    NotificationFragment notificationFragment = new NotificationFragment();
 
 
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView  = findViewById(R.id.bottom_navigation);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
 
 //        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.notification);
 //        badgeDrawable.setVisible(true);
@@ -85,14 +85,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.home:
 
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+                        //getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
                         return true;
                     case R.id.notification:
                         goToSecondActivity();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
+                       // getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
                         return true;
                     case R.id.settings:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,settingsFragment).commit();
+                        //getSupportFragmentManager().beginTransaction().replace(R.id.container,settingsFragment).commit();
                         return true;
                 }
 

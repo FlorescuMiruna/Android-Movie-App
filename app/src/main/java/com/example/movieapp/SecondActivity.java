@@ -2,11 +2,13 @@ package com.example.movieapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -70,26 +72,26 @@ public class SecondActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        bottomNavigationView  = findViewById(R.id.bottom_navigation);
+      //  bottomNavigationView  = findViewById(R.id.bottom_navigation);
 
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.home:
-                        goToMainActivity();
-
-                        return true;
-                    case R.id.notification:
-
-                        return true;
-                    case R.id.settings:
-                        return true;
-                }
-
-                return false;
-            }
-        });
+//        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(MenuItem item) {
+//                switch (item.getItemId()){
+//                    case R.id.home:
+//                        goToMainActivity();
+//
+//                        return true;
+//                    case R.id.notification:
+//
+//                        return true;
+//                    case R.id.settings:
+//                        return true;
+//                }
+//
+//                return false;
+//            }
+//        });
     }
 
     private void goToMainActivity(){
@@ -97,6 +99,28 @@ public class SecondActivity extends AppCompatActivity {
 
         startActivity(intent);
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_manu, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                recyclerAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
+
+        return super.onCreateOptionsMenu(menu);
     }
 
 
