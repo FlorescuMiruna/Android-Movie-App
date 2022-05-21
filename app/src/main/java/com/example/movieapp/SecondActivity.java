@@ -6,8 +6,19 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 public class SecondActivity extends AppCompatActivity {
+    RecyclerView recyclerView;
+    RecyclerAdapter recyclerAdapter;
+    BottomNavigationView bottomNavigationView;
+
+    List<String> moviesList;
+
 
 
     @Override

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,9 +83,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.home:
+
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
                         return true;
                     case R.id.notification:
+                        goToSecondActivity();
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
                         return true;
                     case R.id.settings:
@@ -97,7 +101,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void goToSecondActivity(){
+        Intent intent = new Intent(this,SecondActivity.class);
 
+        startActivity(intent);
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
