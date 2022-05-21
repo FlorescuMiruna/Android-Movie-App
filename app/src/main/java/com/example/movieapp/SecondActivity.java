@@ -35,11 +35,12 @@ public class SecondActivity extends AppCompatActivity {
         Intent intent = getIntent();
        // String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 // Capture the layout's TextView and set the string as its text
-        TextView textView = findViewById(R.id.textView2);
+//        TextView textView = findViewById(R.id.textView2);
        // textView.setText(getString(R.string.hello) + message);
 
 
         moviesList = new ArrayList<>();
+        moviesList.add("The prestige");
         moviesList.add("Iron Man");
         moviesList.add("The Incredible Hulk");
         moviesList.add("Iron Man 2");
@@ -72,30 +73,30 @@ public class SecondActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-      //  bottomNavigationView  = findViewById(R.id.bottom_navigation);
+        bottomNavigationView  = findViewById(R.id.bottom_navigation);
 
-//        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(MenuItem item) {
-//                switch (item.getItemId()){
-//                    case R.id.home:
-//                        goToMainActivity();
-//
-//                        return true;
-//                    case R.id.notification:
-//
-//                        return true;
-//                    case R.id.settings:
-//                        return true;
-//                }
-//
-//                return false;
-//            }
-//        });
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home:
+                        goToMainActivity();
+
+                        return true;
+                    case R.id.movies:
+
+                        return true;
+                    case R.id.settings:
+                        return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     private void goToMainActivity(){
-        Intent intent = new Intent(this,SecondActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
 
         startActivity(intent);
 
