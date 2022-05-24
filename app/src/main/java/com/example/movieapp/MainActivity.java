@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         movies.add(new Movie("Batman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
         movies.add(new Movie("Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
         movies.add(new Movie("Batman vs Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
+        movies.add(new Movie("Inception", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
         System.out.println(movies);
 
         Log.d("MOV", movies.toString());
@@ -117,9 +120,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToSecondActivity(){
-        Intent intent = new Intent(this,SecondActivity.class);
+//        Intent intent = new Intent(this,SecondActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("data", (Parcelable) movies);
+//        intent.putExtras(bundle);
 
-        startActivity(intent);
+
+        Intent i = new Intent(this,SecondActivity.class);
+
+//        ArrayList<Movie> testing = new ArrayList<Movie>();
+
+        i.putParcelableArrayListExtra("extra", (ArrayList<? extends Parcelable>) movies);
+
+        startActivity(i);
+
 
     }
     @Override

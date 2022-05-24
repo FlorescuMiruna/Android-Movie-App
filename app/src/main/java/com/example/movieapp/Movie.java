@@ -1,6 +1,9 @@
 package com.example.movieapp;
 
-public class Movie {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Movie implements Parcelable {
     private String title;
     private String date;
     private String imageId;
@@ -12,6 +15,26 @@ public class Movie {
         this.imageId = imageId;
         this.director = director;
     }
+
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        date = in.readString();
+        imageId = in.readString();
+        director = in.readString();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -54,4 +77,19 @@ public class Movie {
                 ", director='" + director + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(date);
+        dest.writeString(imageId);
+        dest.writeString(director);
+
+    }
+
 }
