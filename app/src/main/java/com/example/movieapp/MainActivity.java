@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
         movies = new ArrayList<>();
 
-        movies.add(new Movie("Batman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
-        movies.add(new Movie("Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
-        movies.add(new Movie("Batman vs Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
-        movies.add(new Movie("Inception", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
+        movies.add(new Movie("Batman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan",false));
+        movies.add(new Movie("Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan",false));
+        movies.add(new Movie("Batman vs Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan",false));
+        movies.add(new Movie("Inception", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan",false));
         System.out.println(movies);
 
         Log.d("MOV", movies.toString());

@@ -27,13 +27,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     List<Movie> movies;
     List<Movie> moviesAll;
 
-//    List<String> moviesList;
-//    List<String> moviesListAll;
+
 
     public RecyclerAdapter(List<Movie> movies) {
-//        this.moviesList = moviesList;
-//        moviesListAll = new ArrayList<>();
-//        moviesListAll.addAll(moviesList);
+
 
         this.movies = movies;
         moviesAll = new ArrayList<>();
@@ -54,8 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.movieDateTextView.setText(movies.get(position).getDate() );
         holder.textView.setText(movies.get(position).getTitle()  );
 
-//        holder.imageView.setImageDrawable(String.valueOf(R.drawable.batman));
-//        holder.imageView.setImageDrawable();
+
 
 
 
@@ -120,10 +116,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             itemView.setOnClickListener(this);
 
         }
-
+/**
         @Override
         public void onClick(View view) {
             Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle(), Toast.LENGTH_SHORT).show();
+        } */
+
+        @Override
+        public void onClick(View view) {
+            movies.get(getAdapterPosition()).setReserved(true);
+//            System.out.println("MOV" +   movies.get(getAdapterPosition()));
+            Log.d("MOV", String.valueOf(movies.get(getAdapterPosition())));
+            Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle() + " was reserved", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 }

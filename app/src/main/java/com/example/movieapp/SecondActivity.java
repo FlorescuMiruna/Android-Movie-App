@@ -36,8 +36,7 @@ public class SecondActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        System.out.println("ce");
-        System.out.println("extraa"+ movies);
+
 
 // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
@@ -48,9 +47,13 @@ public class SecondActivity extends AppCompatActivity {
         // textView.setText(getString(R.string.hello) + message);
 
         movies = this.getIntent().getParcelableArrayListExtra("extra");
-        System.out.println("extraa"+ movies);
-        Log.d("myTag", "This is my message");
-        movies.add(new Movie("Batmann", "12-03-2022","id_batman", "Nolan"));
+
+
+
+
+        movies.add(new Movie("Interstellar", "12-03-2022","id_batman", "Nolan",true));
+
+        System.out.println("movies"+ movies.toString());
 //        movies.add(new Movie("Superman", "12-03-2022","id_batman", "Nolan"));
 
 
