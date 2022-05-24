@@ -1,9 +1,11 @@
 package com.example.movieapp;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -47,6 +49,9 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.movieDateTextView.setText(movies.get(position).getDate() );
         holder.textView.setText(movies.get(position).getTitle()  );
+
+        holder.imageView.setImageResource(R.drawable.tiket);
+
 
 
 
@@ -125,6 +130,19 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
 //            System.out.println("MOV" +   movies.get(getAdapterPosition()));
             Log.d("MOV", String.valueOf(movies.get(getAdapterPosition())));
             Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle() , Toast.LENGTH_SHORT).show();
+
+            Button button1 = view.findViewById(R.id.share);
+            button1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, movies.get(getAdapterPosition()).getTitle());
+                    sendIntent.setType("text/plain");
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    v.getContext().startActivity(shareIntent);
+                }
+            });
+
         }
 
 

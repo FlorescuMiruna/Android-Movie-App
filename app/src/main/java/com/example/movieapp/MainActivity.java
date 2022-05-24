@@ -2,16 +2,23 @@ package com.example.movieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -27,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerAdapter recyclerAdapter;
     BottomNavigationView bottomNavigationView;
 
-    List<String> moviesList;
+
 
     List<Movie> movies;
 
@@ -42,41 +49,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        moviesList = new ArrayList<>();
-        moviesList.add("Inception");
-        moviesList.add("Iron Man");
+        Uri uri = getIntent().getData();
+        if(uri != null){
+            List<String> params = uri.getPathSegments();
+            String id = params.get(params.size() - 1);
+            Toast.makeText(this, "id" + id, Toast.LENGTH_SHORT).show();
+
+        }
+
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            System.out.println("AICI");
+            NotificationChannel channel = new NotificationChannel("My notification", "My notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+
+
 
         movies = new ArrayList<>();
 
-        movies.add(new Movie("Batman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan",false));
-        movies.add(new Movie("Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan",false));
-        movies.add(new Movie("Batman vs Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan",false));
-        movies.add(new Movie("Inception", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan",false));
+        movies.add(new Movie("Batman", "12-06-2022", "batman", "\n" + "Matt Reeves",false));
+        movies.add(new Movie("Superman", "12-03-2022", "superman", "Zack Snyder",false));
+        movies.add(new Movie("Dr. Strange", "12-03-2022", "strange", "\n" + "Sam Raimi",false));
+        movies.add(new Movie("Thor", "08-07-2022", "thor", "\n" + "Taika Waititi",false));
+        movies.add(new Movie("Inception", "11-03-2022","inception", "Christopher Nolan",false));
+        movies.add(new Movie("Tenet", "12-03-2022", "tenet", "Christopher Nolan",false));
+        movies.add(new Movie("Interstellar", "9-07-2022", "interstellar", "Christopher Nolan",false));
+        movies.add(new Movie("Don't loop up", "12-03-2022","up", "Adam McKay",false));
+
         System.out.println(movies);
 
         Log.d("MOV", movies.toString());
-//        moviesList.add("The Incredible Hulk");
-//        moviesList.add("Iron Man 2");
-//        moviesList.add("Thor");
-//        moviesList.add("Captain America: The First Avenger");
-//        moviesList.add("The Avengers");
-//        moviesList.add("Iron Man 3");
-//        moviesList.add("Thor: The Dark World");
-//        moviesList.add("Captain America: The Winter Soldier");
-//        moviesList.add("Guardians of the Galaxy");
-//        moviesList.add("Avengers: Age of Ultron");
-//        moviesList.add("Ant-Man");
-//        moviesList.add("Captain America: Civil War");
-//        moviesList.add("Doctor Strange");
-//        moviesList.add("Guardians of the Galaxy Vol. 2");
-//        moviesList.add("Spider-Man: Homecoming");
-//        moviesList.add("Thor: Ragnarok");
-//        moviesList.add("Black Panther");
-//        moviesList.add("Avengers: Infinity War");
-//        moviesList.add("Ant-Man and the Wasp");
-//        moviesList.add("Captain Marvel");
-//        moviesList.add("Avengers: Endgame");
-//        moviesList.add("Spider-Man: Far From Home");
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerAdapter = new RecyclerAdapter(movies);
@@ -102,15 +107,21 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.home:
 
-
-                        //getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
                         return true;
                     case R.id.movies:
                         goToSecondActivity();
-                        // getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
                         return true;
-                    case R.id.settings:
-                        //getSupportFragmentManager().beginTransaction().replace(R.id.container,settingsFragment).commit();
+                    case R.id.notification:
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this,"My notification");
+
+                        builder.setContentTitle("Movie Notification");
+                        builder.setContentText("Grab your tikets now!");
+                        builder.setSmallIcon(R.drawable.ic_baseline_movie_creation_24);
+                        builder.setAutoCancel(true);
+
+                        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MainActivity.this);
+                        managerCompat.notify(1,builder.build());
+                      //  getSupportFragmentManager().beginTransaction().replace(R.id.container,settingsFragment).commit();
                         return true;
                 }
 
@@ -120,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void goToSecondActivity(){
+
+
+
 //        Intent intent = new Intent(this,SecondActivity.class);
 //        Bundle bundle = new Bundle();
 //        bundle.putParcelable("data", (Parcelable) movies);

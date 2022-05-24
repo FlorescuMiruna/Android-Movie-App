@@ -1,6 +1,9 @@
 package com.example.movieapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +28,8 @@ public class SecondActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerAdapter2 recyclerAdapter;
     BottomNavigationView bottomNavigationView;
+
+
 
 //    List<String> moviesList;
 
@@ -38,21 +45,23 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            System.out.println("AICI");
+            NotificationChannel channel = new NotificationChannel("My notification", "My notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
 
+        }
 // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
 
-        // String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-// Capture the layout's TextView and set the string as its text
-//        TextView textView = findViewById(R.id.textView2);
-        // textView.setText(getString(R.string.hello) + message);
 
         movies = this.getIntent().getParcelableArrayListExtra("extra");
 
 
 
 
-//        movies.add(new Movie("Interstellar", "12-03-2022","id_batman", "Nolan",true));
+
 
 
 
@@ -88,8 +97,16 @@ public class SecondActivity extends AppCompatActivity {
                     case R.id.movies:
 
                         return true;
-                    case R.id.settings:
-                        return true;
+                    case R.id.notification:
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(SecondActivity.this,"My notification");
+
+                        builder.setContentTitle("Movie Notification");
+                        builder.setContentText("Grab your tikets now!");
+                        builder.setSmallIcon(R.drawable.ic_baseline_movie_creation_24);
+                        builder.setAutoCancel(true);
+
+                        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(SecondActivity.this);
+                        managerCompat.notify(1,builder.build());
                 }
 
                 return false;

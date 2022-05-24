@@ -1,10 +1,13 @@
 package com.example.movieapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,8 +56,33 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.movieDateTextView.setText(movies.get(position).getDate() );
         holder.textView.setText(movies.get(position).getTitle()  );
 
+        if(movies.get(position).getImageId() == "batman") {
+            holder.imageView.setImageResource(R.drawable.batman);
+        }
+        if(movies.get(position).getImageId() == "superman") {
+            holder.imageView.setImageResource(R.drawable.superman);
+        }
+        if(movies.get(position).getImageId() == "strange") {
+            holder.imageView.setImageResource(R.drawable.strange);
+        }
+        if(movies.get(position).getImageId() == "thor") {
+            holder.imageView.setImageResource(R.drawable.thor);
+        }
+        if(movies.get(position).getImageId() == "inception") {
+            holder.imageView.setImageResource(R.drawable.inception);
+        }
+        if(movies.get(position).getImageId() == "tenet") {
+            holder.imageView.setImageResource(R.drawable.tenet);
+        }
+        if(movies.get(position).getImageId() == "interstellar") {
+            holder.imageView.setImageResource(R.drawable.interstellar);
+        }
+        if(movies.get(position).getImageId() == "up") {
+            holder.imageView.setImageResource(R.drawable.up);
+        }
+        //holder.imageView.setImageResource(R.drawable.batman);
 
-
+      //  holder.imageView.setImageURI(Uri.parse("android.resource://"  + "drawable/" + "superman.png"));
 
 
     }
@@ -126,6 +156,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public void onClick(View view) {
             if(movies.get(getAdapterPosition()).getReserved() == false){
                 movies.get(getAdapterPosition()).setReserved(true);
+
+
+
                 Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle() + " was reserved", Toast.LENGTH_SHORT).show();
             }
             else {
@@ -135,7 +168,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 //            System.out.println("MOV" +   movies.get(getAdapterPosition()));
             Log.d("MOV", String.valueOf(movies.get(getAdapterPosition())));
 
+            Button button1 = view.findViewById(R.id.share);
+            button1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, movies.get(getAdapterPosition()).getTitle());
+                    sendIntent.setType("text/plain");
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    v.getContext().startActivity(shareIntent);
+                }
+            });
+
         }
+
+
 
 
     }

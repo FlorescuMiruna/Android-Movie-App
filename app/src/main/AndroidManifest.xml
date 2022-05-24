@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.movieapp">
 
     <application
@@ -17,6 +18,30 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+<!--            <intent-filter tools:ignore="AppLinkUrlError">-->
+<!--                <action android:name="android.intent.action.VIEW"></action>-->
+<!--                <category android:name="android.intent.category.BROWSABLE"></category>-->
+
+<!--                <data android:scheme="https"-->
+<!--                    android:host="www.movietiketsapp.com"></data>-->
+<!--            </intent-filter>-->
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW"></action>-->
+<!--                <category android:name="android.intent.category.BROWSABLE"></category>-->
+
+<!--                <data android:scheme="http"-->
+<!--                    android:host="www.movietiketsapp.com"></data>-->
+<!--            </intent-filter>-->
+
+<!--            <intent-filter tools:ignore="AppLinkUrlError">-->
+<!--                <action android:name="android.intent.action.VIEW"></action>-->
+<!--                <category android:name="android.intent.category.BROWSABLE"></category>-->
+
+<!--                <data android:scheme="app"-->
+<!--                    android:host="www.movietiketsapp.com"></data>-->
+<!--            </intent-filter>-->
         </activity>
 
         <activity android:name=".SecondActivity"/>
