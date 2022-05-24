@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SecondActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    RecyclerAdapter recyclerAdapter;
+    RecyclerAdapter2 recyclerAdapter;
     BottomNavigationView bottomNavigationView;
 
 //    List<String> moviesList;
@@ -30,6 +30,7 @@ public class SecondActivity extends AppCompatActivity {
 
 
     ArrayList<Movie> movies;
+    ArrayList<Movie> reservedMovies = new ArrayList<>();
 
 
     @Override
@@ -51,15 +52,23 @@ public class SecondActivity extends AppCompatActivity {
 
 
 
-        movies.add(new Movie("Interstellar", "12-03-2022","id_batman", "Nolan",true));
+//        movies.add(new Movie("Interstellar", "12-03-2022","id_batman", "Nolan",true));
 
-        System.out.println("movies"+ movies.toString());
+
+
+     for(Movie movie : movies){
+         if(movie.getReserved())
+             reservedMovies.add(movie);
+     }
+
+
+        System.out.println("reservedMovies"+ reservedMovies.toString());
 //        movies.add(new Movie("Superman", "12-03-2022","id_batman", "Nolan"));
 
 
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerAdapter = new RecyclerAdapter(movies);
+        recyclerAdapter = new RecyclerAdapter2(reservedMovies);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapter);
 

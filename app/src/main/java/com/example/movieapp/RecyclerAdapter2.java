@@ -1,6 +1,5 @@
 package com.example.movieapp;
 
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,24 +11,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
+public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.ViewHolder> implements Filterable {
 
-    private static final String TAG = "RecyclerAdapter";
+    private static final String TAG = "RecyclerAdapter2";
 
     List<Movie> movies;
     List<Movie> moviesAll;
 
 
 
-    public RecyclerAdapter(List<Movie> movies) {
+    public RecyclerAdapter2(List<Movie> movies) {
 
 
         this.movies = movies;
@@ -116,25 +113,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             itemView.setOnClickListener(this);
 
         }
-/**
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle(), Toast.LENGTH_SHORT).show();
-        } */
+        /**
+         @Override
+         public void onClick(View view) {
+         Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle(), Toast.LENGTH_SHORT).show();
+         } */
 
         @Override
         public void onClick(View view) {
-            if(movies.get(getAdapterPosition()).getReserved() == false){
-                movies.get(getAdapterPosition()).setReserved(true);
-                Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle() + " was reserved", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle() , Toast.LENGTH_SHORT).show();
-            }
 
 //            System.out.println("MOV" +   movies.get(getAdapterPosition()));
             Log.d("MOV", String.valueOf(movies.get(getAdapterPosition())));
-
+            Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle() , Toast.LENGTH_SHORT).show();
         }
 
 
