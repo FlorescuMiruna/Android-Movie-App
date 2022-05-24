@@ -25,6 +25,10 @@ public class SecondActivity extends AppCompatActivity {
 
     List<String> moviesList;
 
+    List<Movie> movies;
+
+
+
 
 
     @Override
@@ -33,11 +37,15 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
 // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-       // String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        // String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 // Capture the layout's TextView and set the string as its text
 //        TextView textView = findViewById(R.id.textView2);
-       // textView.setText(getString(R.string.hello) + message);
+        // textView.setText(getString(R.string.hello) + message);
 
+        movies = new ArrayList<>();
+
+        movies.add(new Movie("Batman", "12-03-2022","id_batman", "Nolan"));
+        movies.add(new Movie("Superman", "12-03-2022","id_batman", "Nolan"));
 
         moviesList = new ArrayList<>();
         moviesList.add("The prestige");
@@ -66,7 +74,7 @@ public class SecondActivity extends AppCompatActivity {
         moviesList.add("Spider-Man: Far From Home");
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerAdapter = new RecyclerAdapter(moviesList);
+        recyclerAdapter = new RecyclerAdapter(movies);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -123,6 +131,8 @@ public class SecondActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+
 
 
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -22,13 +23,21 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
 
     private static final String TAG = "RecyclerAdapter";
-    List<String> moviesList;
-    List<String> moviesListAll;
 
-    public RecyclerAdapter(List<String> moviesList) {
-        this.moviesList = moviesList;
-        moviesListAll = new ArrayList<>();
-        moviesListAll.addAll(moviesList);
+    List<Movie> movies;
+    List<Movie> moviesAll;
+
+//    List<String> moviesList;
+//    List<String> moviesListAll;
+
+    public RecyclerAdapter(List<Movie> movies) {
+//        this.moviesList = moviesList;
+//        moviesListAll = new ArrayList<>();
+//        moviesListAll.addAll(moviesList);
+
+        this.movies = movies;
+        moviesAll = new ArrayList<>();
+        moviesAll.addAll(movies);
     }
 
     @NonNull
@@ -42,34 +51,38 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.rowCountTextView.setText(String.valueOf(position));
-        holder.textView.setText(moviesList.get(position));
+        holder.movieDateTextView.setText(movies.get(position).getDate() );
+        holder.textView.setText(movies.get(position).getTitle()  );
+
+//        holder.imageView.setImageDrawable(String.valueOf(R.drawable.batman));
+//        holder.imageView.setImageDrawable();
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return moviesList.size();
+        return movies.size();
     }
 
     @Override
     public Filter getFilter() {
-
         return myFilter;
     }
-
     Filter myFilter = new Filter() {
 
         //Automatic on background thread
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
 
-            List<String> filteredList = new ArrayList<>();
+            List<Movie> filteredList = new ArrayList<>();
 
             if (charSequence == null || charSequence.length() == 0) {
-                filteredList.addAll(moviesListAll);
+                filteredList.addAll(moviesAll);
             } else {
-                for (String movie: moviesListAll) {
-                    if (movie.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                for (Movie movie: moviesAll) {
+                    if (movie.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(movie);
                     }
                 }
@@ -77,31 +90,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             FilterResults filterResults = new FilterResults();
             filterResults.values = filteredList;
+
+            System.out.println("REZ" + filterResults.values);
             return filterResults;
         }
 
         //Automatic on UI thread
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            moviesList.clear();
-            moviesList.addAll((Collection<? extends String>) filterResults.values);
+            movies.clear();
+            movies.addAll((Collection<? extends Movie>) filterResults.values);
             notifyDataSetChanged();
         }
     };
 
 
-
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView imageView;
-        TextView textView, rowCountTextView;
+        TextView textView, movieDateTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imageView);
             textView = itemView.findViewById(R.id.textView);
-            rowCountTextView = itemView.findViewById(R.id.rowCountTextView);
+            movieDateTextView = itemView.findViewById(R.id.movie_date);
 
             itemView.setOnClickListener(this);
 
@@ -109,10 +123,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(view.getContext(), moviesList.get(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle(), Toast.LENGTH_SHORT).show();
         }
     }
 }
-
-
-

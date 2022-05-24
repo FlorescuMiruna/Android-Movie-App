@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> moviesList;
 
+    List<Movie> movies;
+
 //    HomeFragment homeFragment = new HomeFragment();
 //    SettingsFragment settingsFragment = new SettingsFragment();
 //    NotificationFragment notificationFragment = new NotificationFragment();
@@ -38,8 +41,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         moviesList = new ArrayList<>();
-//        moviesList.add("Inception");
-//        moviesList.add("Iron Man");
+        moviesList.add("Inception");
+        moviesList.add("Iron Man");
+
+        movies = new ArrayList<>();
+
+        movies.add(new Movie("Batman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
+        movies.add(new Movie("Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
+        movies.add(new Movie("Batman vs Superman", "12-03-2022", String.valueOf(R.drawable.batman), "Nolan"));
+        System.out.println(movies);
+
+        Log.d("MOV", movies.toString());
 //        moviesList.add("The Incredible Hulk");
 //        moviesList.add("Iron Man 2");
 //        moviesList.add("Thor");
@@ -64,12 +76,14 @@ public class MainActivity extends AppCompatActivity {
 //        moviesList.add("Spider-Man: Far From Home");
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerAdapter = new RecyclerAdapter(moviesList);
+        recyclerAdapter = new RecyclerAdapter(movies);
 
         recyclerView.setAdapter(recyclerAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
+
+
 
         bottomNavigationView  = findViewById(R.id.bottom_navigation);
 
@@ -90,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.movies:
                         goToSecondActivity();
-                       // getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
+                        // getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
                         return true;
                     case R.id.settings:
                         //getSupportFragmentManager().beginTransaction().replace(R.id.container,settingsFragment).commit();
