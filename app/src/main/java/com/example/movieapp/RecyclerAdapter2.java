@@ -128,6 +128,7 @@ public class RecyclerAdapter2 extends RecyclerView.Adapter<RecyclerAdapter2.View
         public void onClick(View view) {
 
 //            System.out.println("MOV" +   movies.get(getAdapterPosition()));
+            Log.d("onClick 2 ", String.valueOf(movies.get(getAdapterPosition())));
             Log.d("MOV", String.valueOf(movies.get(getAdapterPosition())));
             Toast.makeText(view.getContext(), movies.get(getAdapterPosition()).getTitle() , Toast.LENGTH_SHORT).show();
 

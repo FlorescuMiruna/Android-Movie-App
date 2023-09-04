@@ -166,11 +166,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             }
 
 //            System.out.println("MOV" +   movies.get(getAdapterPosition()));
-            Log.d("MOV", String.valueOf(movies.get(getAdapterPosition())));
+            Log.d("Movie:", String.valueOf(movies.get(getAdapterPosition())));
 
             Button button1 = view.findViewById(R.id.share);
             button1.setOnClickListener(new View.OnClickListener() {
+
                 public void onClick(View v) {
+
+                    System.out.println("onClick ***");
+                    Log.d("onClick ***", "**");
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
                     sendIntent.putExtra(Intent.EXTRA_TEXT, movies.get(getAdapterPosition()).getTitle());
