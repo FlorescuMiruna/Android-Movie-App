@@ -4,8 +4,8 @@
     package="com.example.movieapp">
 
     <!-- Permisiuni pentru camera -->
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+<!--    <uses-feature android:name="android.hardware.camera" />-->
+<!--    <uses-feature android:name="android.hardware.camera.autofocus" />-->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -49,6 +49,17 @@
 <!--                    android:host="www.movietiketsapp.com"></data>-->
 <!--            </intent-filter>-->
         </activity>
+        <provider
+            android:authorities="com.example.movieapp.fileProvider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATH"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
 
         <activity android:name=".SecondActivity"/>
     </application>
