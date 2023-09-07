@@ -1,16 +1,10 @@
 package com.example.movieapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,15 +14,37 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+
+//import com.example.movieapp.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.io.Serializable;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PrimitiveIterator;
 
-
+import com.example.movieapp.databinding.*;
 public class MainActivity extends AppCompatActivity {
+
+    private static final int CAMERA_PERMISSION_CODE = 1;
+
+    ActivityMainBinding mainBinding;
+    ActivityResultLauncher<Uri> takePictureLauncher;
+    Uri imageUri;
 
     RecyclerView recyclerView;
     RecyclerAdapter recyclerAdapter;
@@ -47,7 +63,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+
+//        setContentView(R.layout.activity_main);
+        setContentView(mainBinding.getRoot());
+
+        mainBinding.btnTakePicture.setOnClickListener(view -> {
+            checkCameraPermissionAndOpenCamera();
+        });
+
+        imageUri = createUri();
+        registerPictureLauncher();
 
         Uri uri = getIntent().getData();
         if(uri != null){
@@ -171,5 +198,53 @@ public class MainActivity extends AppCompatActivity {
 
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private Uri createUri(){
+        File imageFile = new File(getApplicationContext().getFilesDir(),"camera_photo.jpg");
+        return FileProvider.getUriForFile(getApplicationContext(), "com.example.movieapp.fileProvider", imageFile);
+    }
+
+    private void registerPictureLauncher(){
+        takePictureLauncher = registerForActivityResult(
+                new ActivityResultContracts.TakePicture(),
+                new ActivityResultCallback<Boolean>() {
+                    @Override
+                    public void onActivityResult(Boolean result) {
+                        try {
+                            if(result) {
+                                mainBinding.ivUser.setImageURI(null);
+                                mainBinding.ivUser.setImageURI(imageUri);
+                            }
+                        }catch (Exception exception){
+                            exception.getStackTrace();
+                        }
+                    }
+                }
+        );
+    }
+
+    private void  checkCameraPermissionAndOpenCamera() {
+        if(ActivityCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE );
+        } else {
+            takePictureLauncher.launch(imageUri);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == CAMERA_PERMISSION_CODE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                takePictureLauncher.launch(imageUri);
+            }else {
+                Toast.makeText(this,"Camera permission denied, please allow permission to take picture!!", Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 }
